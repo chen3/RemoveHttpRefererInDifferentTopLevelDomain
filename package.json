@@ -1,0 +1,27 @@
+{
+  "name": "remove-http-referer-in-different-top-level-domain",
+  "version": "0.1.0",
+  "description": "Removes http referer in the request header when accessing different top-level domains.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "http-referer",
+    "httpreferer",
+    "referer"
+  ],
+  "author": "chen3",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@types/node": "^10.9.4",
+    "ts-events": "^3.2.0",
+    "typescript-collections": "^1.3.2",
+    "vue": "^2.5.17",
+    "vuetify": "^1.2.1"
+  },
+  "devDependencies": {
+    "babel-preset-react": "^6.24.1",
+    "parcel-bundler": "^1.9.7",
+    "typescript": "^3.0.3"
+  }
+}
