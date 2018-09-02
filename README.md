@@ -1,1 +1,3 @@
 # RemoveHttpRefererInDifferentTopLevelDomain
+在访问不同的主域名时移除请求头中的referer。
+例如从www.baidu.com跳转到www.bilibili.com时，从http头中移除referer。
