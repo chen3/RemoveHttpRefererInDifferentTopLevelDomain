@@ -6,7 +6,7 @@
 	"version": "0.1.0",
     "permissions": ["webRequest", "webRequestBlocking", "<all_urls>", "storage"],
     "background": {
-        "scripts": ["work.js"]
+        "scripts": ["background.js"]
     },
     "minimum_chrome_version": "55"
 }
