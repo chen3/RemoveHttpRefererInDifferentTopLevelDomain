@@ -1,0 +1,12 @@
+﻿{
+	"manifest_version": 2,
+	"name": "去除不同域名Referer保护隐私",
+    "description": "在访问不同的主域名时移除请求头中的referer。",
+    "author" : "chen3",
+	"version": "0.1.0",
+    "permissions": ["webRequest", "webRequestBlocking", "<all_urls>", "storage"],
+    "background": {
+        "scripts": ["work.js"]
+    },
+    "minimum_chrome_version": "55"
+}
