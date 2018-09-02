@@ -5,6 +5,7 @@
         "module": "es2015",
         "removeComments": true,
         "sourceMap": true,
+        "strict": true,
         "types": ["chrome"],
         "moduleResolution": "node"
     }
