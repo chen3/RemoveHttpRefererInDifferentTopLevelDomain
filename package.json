@@ -2,9 +2,6 @@
   "name": "remove-http-referer-in-different-top-level-domain",
   "version": "0.1.0",
   "description": "Removes http referer in the request header when accessing different top-level domains.",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "http-referer",
     "httpreferer",
