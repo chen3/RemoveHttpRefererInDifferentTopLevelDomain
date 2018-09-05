@@ -23,7 +23,6 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import "@mdi/font"
 export default Vue.extend({
     data: () => ({
         drawer: null
