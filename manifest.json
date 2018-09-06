@@ -6,10 +6,7 @@
 	"version": "0.2.0",
     "permissions": ["webRequest", "webRequestBlocking", "<all_urls>", "storage"],
     "background": {
-        "scripts": [
-            "typescript-collections.min.js",
-            "ts-events.min.js",
-            "background.js"]
+        "scripts": "background.js"
     },
     "minimum_chrome_version": "55"
 }
