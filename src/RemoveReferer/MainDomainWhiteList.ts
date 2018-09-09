@@ -1,6 +1,6 @@
 import { RequestItem } from "./RequestItem";
 import { SyncEvent } from "ts-events";
-
+import { CollectionsSetHelper } from "./CollectionsSetHelper"
 import * as Collections from 'typescript-collections';
 
 export class MainDomainWhiteList {
@@ -44,8 +44,13 @@ export class MainDomainWhiteList {
                 if (!this.autoReloadAtferChanged) {
                     return;
                 }
-                const whiteListSet: Collections.Set<RequestItem> = result[MainDomainWhiteList.whiteListSetStorageKey];
-                this.whiteListSet = whiteListSet != null ? whiteListSet : new Collections.Set<RequestItem>();
+                const whiteListSetStr: string = result[MainDomainWhiteList.whiteListSetStorageKey];
+                if (whiteListSetStr == null || whiteListSetStr.length === 0) {
+                    this.whiteListSet = new Collections.Set<RequestItem>();
+                }
+                else {
+                    this.whiteListSet = CollectionsSetHelper.deserializer(whiteListSetStr);
+                }
             });
         }
     };
@@ -55,7 +60,14 @@ export class MainDomainWhiteList {
     public static async loadWithAutoReload(): Promise<MainDomainWhiteList> {
         return new Promise<MainDomainWhiteList>((resolve, reject) => {
             chrome.storage.local.get([MainDomainWhiteList.whiteListSetStorageKey], result => {
-                const mainDomainWhiteList = new MainDomainWhiteList(result[MainDomainWhiteList.whiteListSetStorageKey]);
+                const whiteListSetStr: string = result[MainDomainWhiteList.whiteListSetStorageKey];
+                let mainDomainWhiteList: MainDomainWhiteList;
+                if (whiteListSetStr == null || whiteListSetStr.length === 0) {
+                    mainDomainWhiteList = new MainDomainWhiteList();
+                }
+                else {
+                    mainDomainWhiteList = new MainDomainWhiteList(CollectionsSetHelper.deserializer(whiteListSetStr));
+                }
                 mainDomainWhiteList.setAutoReloadAtferChanged(true);
                 resolve(mainDomainWhiteList);
             });
@@ -64,7 +76,8 @@ export class MainDomainWhiteList {
 
     private async save(): Promise<boolean> {
         return new Promise<boolean>(resolve => {
-            chrome.storage.local.set({[MainDomainWhiteList.whiteListSetStorageKey]: this.whiteListSet}, () => {
+            const str: string = CollectionsSetHelper.serializer(this.whiteListSet);
+            chrome.storage.local.set({[MainDomainWhiteList.whiteListSetStorageKey]: str}, () => {
                 resolve(true);
             });
         });

@@ -1,6 +1,6 @@
 import { RequestItem } from "./RequestItem";
 import { SyncEvent } from "ts-events";
-
+import { CollectionsLinkedListHelper } from "./CollectionsLinkedListHelper"
 import * as Collections from 'typescript-collections';
 
 export class RecentBlockMainDomain {
@@ -19,8 +19,13 @@ export class RecentBlockMainDomain {
                 if (!this.autoReloadAtferChanged) {
                     return;
                 }
-                const recentList: Collections.LinkedList<RequestItem> = result[RecentBlockMainDomain.recentListStorageKey];
-                this.recentList = recentList != null ? recentList : new Collections.LinkedList<RequestItem>();
+                const recentListStr: string = result[RecentBlockMainDomain.recentListStorageKey];
+                if (recentListStr == null || recentListStr.length === 0) {
+                    this.recentList = new Collections.LinkedList<RequestItem>();
+                }
+                else {
+                    this.recentList = CollectionsLinkedListHelper.deserializer(recentListStr);
+                }
             });
         }
     };
@@ -55,7 +60,14 @@ export class RecentBlockMainDomain {
     public static async load(): Promise<RecentBlockMainDomain> {
         return new Promise<RecentBlockMainDomain>((resolve, reject) => {
             chrome.storage.local.get([RecentBlockMainDomain.recentListStorageKey], result => {
-                const recentBlockMainDomain = new RecentBlockMainDomain(result[RecentBlockMainDomain.recentListStorageKey]);
+                const recentListStr: string = result[RecentBlockMainDomain.recentListStorageKey];
+                let recentBlockMainDomain: RecentBlockMainDomain;
+                if (recentListStr == null || recentListStr.length === 0) {
+                    recentBlockMainDomain = new RecentBlockMainDomain();
+                }
+                else {
+                    recentBlockMainDomain = new RecentBlockMainDomain(CollectionsLinkedListHelper.deserializer(recentListStr));
+                }
                 resolve(recentBlockMainDomain);
             });
         });
@@ -64,7 +76,14 @@ export class RecentBlockMainDomain {
     public static async loadWithAutoReload(): Promise<RecentBlockMainDomain> {
         return new Promise<RecentBlockMainDomain>((resolve, reject) => {
             chrome.storage.local.get([RecentBlockMainDomain.recentListStorageKey], result => {
-                const recentBlockMainDomain = new RecentBlockMainDomain(result[RecentBlockMainDomain.recentListStorageKey]);
+                const recentListStr: string = result[RecentBlockMainDomain.recentListStorageKey];
+                let recentBlockMainDomain: RecentBlockMainDomain;
+                if (recentListStr == null || recentListStr.length === 0) {
+                    recentBlockMainDomain = new RecentBlockMainDomain();
+                }
+                else {
+                    recentBlockMainDomain = new RecentBlockMainDomain(CollectionsLinkedListHelper.deserializer(recentListStr));
+                }
                 recentBlockMainDomain.autoReloadAtferChanged = true;
                 resolve(recentBlockMainDomain);
             });
@@ -73,7 +92,8 @@ export class RecentBlockMainDomain {
 
     private async save(): Promise<boolean> {
         return new Promise<boolean>(resolve => {
-            chrome.storage.local.set({[RecentBlockMainDomain.recentListStorageKey]: this.recentList}, () => {
+            const str: string = CollectionsLinkedListHelper.serializer(this.recentList);
+            chrome.storage.local.set({[RecentBlockMainDomain.recentListStorageKey]: str}, () => {
                 resolve(true);
             });
         });
