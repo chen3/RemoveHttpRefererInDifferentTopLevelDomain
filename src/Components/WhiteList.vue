@@ -3,7 +3,7 @@
         <v-layout :row="true">
             <v-flex :xs12="true">
                 <v-list>
-                    <list-item v-for="item in items" :key="item.toString()" :request-item="item"/>
+                    <list-item v-for="item in items" :key="item.toString()" :request-item="item" @delete="handleDelete"/>
                 </v-list>
             </v-flex>
         </v-layout>
@@ -46,6 +46,10 @@ export default class extends Vue {
 
     private handleAddItem(item: RequestItem) {
         this.list.add(item);
+    }
+
+    private handleDelete(item: RequestItem) {
+        this.list.remove(item);
     }
 }
 </script>
