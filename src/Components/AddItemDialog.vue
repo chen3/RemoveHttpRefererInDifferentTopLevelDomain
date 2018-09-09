@@ -18,6 +18,13 @@
                 <v-btn flat color="primary" @click="dialogVisibled = false">添加</v-btn>
             </v-card-actions>
         </v-card>
+        <v-dialog max-width="700px" v-model="messageDialogVisible">
+            <v-card>
+                <v-card-text>
+                    <span>{{message}}</span>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-dialog>
 </template>
 <script lang="ts">
@@ -69,6 +76,13 @@ export default class AddItemDialog extends Vue {
         return true;
     };
     
+    private message: string = "";
+    private messageDialogVisible: boolean = false;
+
+    private showMessage(message: string) {
+        this.message = message;
+        this.messageDialogVisible = true;
+    }
 
 }
 </script>
