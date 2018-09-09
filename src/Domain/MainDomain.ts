@@ -20,7 +20,7 @@ export class MainDomain {
         return this.mainDomain;
     }
 
-    private static isValidDomain(domain: string): boolean {
+    public static isValidDomain(domain: string): boolean {
         // if (domain == undefined || domain === "") {
         if (domain === "") {
             return false;
