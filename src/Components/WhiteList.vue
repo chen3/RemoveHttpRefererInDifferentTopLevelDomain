@@ -12,19 +12,7 @@
                 <v-icon>add</v-icon>
             </v-btn>
         </v-fab-transition>
-        <add-item-dialog v-model="dialog" max-width="500px"/>
-        <!-- <v-dialog v-model="dialog">
-            <v-card>
-                <v-card-text>
-                    <v-text-field label="File name"></v-text-field>
-                    <small class="grey--text">* This doesn't actually save.</small>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn color="primary" @click="dialog = false">Submit</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog> -->
+        <add-item-dialog v-model="dialog" max-width="500px" @add="handleAddItem"/>
     </div>
 </template>
 <script lang="ts">
@@ -46,12 +34,18 @@ export default class extends Vue {
     public items: RequestItem[] = [];
     public dialog: boolean = false;
 
+    private list!: MainDomainWhiteList;
+
     public async mounted() {
-        const list: MainDomainWhiteList = await MainDomainWhiteList.loadWithAutoReload();
-        this.items = list.getWhiteListArray();
-        list.dataChanged.attach((data: Collections.Set<RequestItem>) => {
+        this.list = await MainDomainWhiteList.loadWithAutoReload();
+        this.items = this.list.getWhiteListArray();
+        this.list.dataChanged.attach((data: Collections.Set<RequestItem>) => {
             this.items = data.toArray();
         });
+    }
+
+    private handleAddItem(item: RequestItem) {
+        this.list.add(item);
     }
 }
 </script>

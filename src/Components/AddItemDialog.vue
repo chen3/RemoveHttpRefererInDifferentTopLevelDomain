@@ -15,7 +15,7 @@
             <v-card-actions>
                 <v-spacer/>
                 <v-btn flat color="primary" @click="dialogVisibled = false">取消</v-btn>
-                <v-btn flat color="primary" @click="dialogVisibled = false">添加</v-btn>
+                <v-btn flat color="primary" @click="add">添加</v-btn>
             </v-card-actions>
         </v-card>
         <v-dialog max-width="700px" v-model="messageDialogVisible">
@@ -82,6 +82,22 @@ export default class AddItemDialog extends Vue {
     private showMessage(message: string) {
         this.message = message;
         this.messageDialogVisible = true;
+    }
+
+    private add() {
+        try {
+            const originMainDomain: MainDomain = MainDomain.parse(this.originMainDomain);
+            const requestMainDomain: MainDomain = MainDomain.parse(this.requestMainDomain);
+            const requestItem = new RequestItem(originMainDomain, requestMainDomain);
+            
+            this.dialogVisibled = false;
+            this.originMainDomain = "";
+            this.requestMainDomain = "";
+            this.$emit("add", requestItem);
+        }
+        catch (exception) {
+            this.showMessage(exception);
+        }
     }
 
 }
