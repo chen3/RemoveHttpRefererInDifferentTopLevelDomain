@@ -40,7 +40,7 @@ export default class AddItemDialog extends Vue {
     @Prop(Boolean)
     public scrollable!: boolean;
 
-    @Model("visible", { type: Boolean }) 
+    @Model("update:visibled", { type: Boolean }) 
     public visibled!: boolean;
 
     private get dialogVisibled() {
@@ -49,7 +49,7 @@ export default class AddItemDialog extends Vue {
 
     private set dialogVisibled(newValue: boolean) {
         if (newValue !== this.dialogVisibled) {
-            this.$emit("visible", newValue);
+            this.$emit("update:visibled", newValue);
         }
     }
 
