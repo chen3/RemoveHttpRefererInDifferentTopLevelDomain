@@ -3,7 +3,7 @@
         <v-layout :row="true">
             <v-flex :xs12="true">
                 <v-list>
-                    <item v-for="item in items" :key="item.toString()" :request-item="item"/>
+                    <list-item v-for="item in items" :key="item.toString()" :request-item="item"/>
                 </v-list>
             </v-flex>
         </v-layout>
@@ -18,7 +18,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from 'vue-class-component';
-import Item from "./Item.vue";
+import ListItem from "./ListItem.vue";
 import AddItemDialog from "./AddItemDialog.vue";
 import { MainDomainWhiteList } from "../RemoveReferer/MainDomainWhiteList";
 import * as Collections from 'typescript-collections';
@@ -26,7 +26,7 @@ import { RequestItem } from "../RemoveReferer/RequestItem";
 // import { MainDomain } from "../Domain/MainDomain";
 
 @Component({
-    components: { Item, AddItemDialog }
+    components: { ListItem, AddItemDialog }
 })
 export default class extends Vue {
 
