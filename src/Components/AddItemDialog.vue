@@ -5,8 +5,11 @@
                 <span class="headline">添加</span>
             </v-card-title>
             <v-card-text>
-                <v-text-field label="原始主域名" v-model="originMainDomain" :autofocus="true" />
-                <v-text-field label="请求主域名" v-model="requestMainDomain"/>
+                <v-text-field label="原始主域名" v-model="originMainDomain" :required="true" 
+                    :rules="[mainDomainRule]" :validate-on-blur="true" placeholder="google.com"
+                    :autofocus="true"/>
+                <v-text-field label="请求主域名" v-model="requestMainDomain" :required="true"
+                    :rules="[mainDomainRule]" :validate-on-blur="true" placeholder="bilibili.com"/>
                 <p class="grey--text">请输入类似于baidu.com、google.com等主域名.</p>
             </v-card-text>
             <v-card-actions>
@@ -52,6 +55,20 @@ export default class AddItemDialog extends Vue {
 
     private originMainDomain: string = "";
     private requestMainDomain: string = "";
+
+    private mainDomainRule(value: string)  {
+        if (value.length === 0) {
+            return "必填项";
+        }
+        if (!MainDomain.isValidDomain(value)) {
+            return "不是合格的域名字符串";
+        }
+        if (value.split(".").length !== 2) {
+            return "该字符串不是主域名";
+        }
+        return true;
+    };
     
+
 }
 </script>
