@@ -138,4 +138,8 @@ export class MainDomainWhiteList {
         }
     }
 
+    public getWhiteListArray(): RequestItem[] {
+        return this.whiteListSet.toArray();
+    }
+
 }

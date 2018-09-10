@@ -1,4 +1,4 @@
-import Vue, { CreateElement } from "vue"
+import Vue, { CreateElement, VNode } from "vue"
 import Vuetify from "vuetify"
 import "vuetify/dist/vuetify.min.css"
 import "@mdi/font/css/materialdesignicons.css"
@@ -9,6 +9,6 @@ Vue.use(Vuetify);
 
 new Vue({
     el: '#app',
-    render: (h: CreateElement) => h(App)
+    render: (h: CreateElement): VNode => h(App)
 });
 
