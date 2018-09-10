@@ -1,6 +1,6 @@
 {
   "name": "remove-http-referer-in-different-top-level-domain",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Removes http referer in the request header when accessing different top-level domains.",
   "keywords": [
     "http-referer",
