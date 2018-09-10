@@ -23,14 +23,12 @@ import AddItemDialog from "./AddItemDialog.vue";
 import { MainDomainWhiteList } from "../RemoveReferer/MainDomainWhiteList";
 import * as Collections from 'typescript-collections';
 import { RequestItem } from "../RemoveReferer/RequestItem";
-// import { MainDomain } from "../Domain/MainDomain";
 
 @Component({
     components: { ListItem, AddItemDialog }
 })
 export default class extends Vue {
 
-    // items: RequestItem[] = [new RequestItem(MainDomain.parse("baidu.com"), MainDomain.parse("bilibili.com"))];
     public items: RequestItem[] = [];
     public dialog: boolean = false;
 
